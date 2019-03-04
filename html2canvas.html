@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no"> -->
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>html2canvas</title>
+	<script src="jquery-3.3.1.min.js"></script>
+	<!-- <script src="html2canvas.min.js"></script> -->
+	<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+	<style>
+		html,body{
+			margin: 0;padding: 0;border: 0;
+		}
+		body{
+			font-size: 16px;
+		}
+		#capture{
+			
+		}
+		.header{
+			width: 100%;
+			height: 45px;
+			background: red;
+			text-align: center;
+			line-height: 45px;
+			font-size: 24px;
+		}
+		.con{
+			width: 100%;
+			height: 200px;
+			overflow: hidden;
+		}
+		.con>img{
+	
+		}
+		.footer{
+			width: 100%;
+			background: #eee;
+			height: 45px;
+			line-height: 45px;
+			font-size: 24px;
+			text-align: center;
+		}
+		#img2{
+			width: 100%;
+			top: 60%;
+		}
+		
+	</style>
+	
+</head>
+
+<body>
+	<!-- <div class="div1"></div> -->
+	<!-- 要用于生成快照的html代码 -->
+  	<div id="capture">
+  		<div class="header">我是头部</div>
+		<div class="con"><img src="lyf.jpg" alt=""></div>
+		<div class="footer">我是尾部</div>
+  	</div>
+	
+	
+    <!-- 用于展示html2canvas生成的图片 -->
+    <button onclick="downImg()" style="display: block;margin: 10px 10px;">保存网页至本地</button>
+    <img src="" id="img2">
+</body>
+<script>
+	var downImg;
+html2canvas($("#capture")[0], {scale:1,logging:false,useCORS:true}).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            console.log(dataUrl)
+            downImg=function (url,name) {
+            	url=dataUrl;
+            	 // 生成一个a元素
+		        var a = document.createElement('a')
+		          // 创建一个单击事件
+		        var event = new MouseEvent('click')
+		          
+		          // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
+		        a.download = name || '下载图片名称'
+		          // 将生成的URL设置为a.href属性
+		        a.href = url;
+		          
+		          // 触发a的单击事件
+		        a.dispatchEvent(event)
+		    }
+            $("#img2").attr("src",dataUrl);
+        });
+// html2canvas 生成canvas
+// html2canvas($("#capture")[0],{
+//     useCORS: true, // 允许图片跨域
+//     backgroundColor: null,
+//     logging: false,
+//     // scale: window.devicePixelRatio*2 // 默认值是window.devicePixelRatio
+// }).then(function(canvas) {
+//     // 'image/jpeg', 1.0
+//     // 再利用canvas的toDataURL 方法，将canvas转为图片
+//     var dataURL = canvas.toDataURL();
+//     $("#img2").attr("src",dataURL);
+// }, function(err) {
+//     console.error('oops, something went wrong!', err);
+// });
+
+</script>
+</html>
